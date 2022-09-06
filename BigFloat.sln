@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigFloat", "BigFloat\BigFloat.csproj", "{973C8C6F-9C3E-4B45-8F20-CE1722D132D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EEAD8BDD-C163-408D-9B13-55E70CA65BF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GithubActions", "GithubActions", "{E6D2B6FD-2D6B-404E-ADAB-0D6FAB9342FC}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\GenerateRelease-csharp.yaml = .github\workflows\GenerateRelease-csharp.yaml
+		.github\workflows\UpdateVersion.yaml = .github\workflows\UpdateVersion.yaml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{973C8C6F-9C3E-4B45-8F20-CE1722D132D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{973C8C6F-9C3E-4B45-8F20-CE1722D132D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{973C8C6F-9C3E-4B45-8F20-CE1722D132D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{973C8C6F-9C3E-4B45-8F20-CE1722D132D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E6D2B6FD-2D6B-404E-ADAB-0D6FAB9342FC} = {EEAD8BDD-C163-408D-9B13-55E70CA65BF9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E76EF16-8FDA-49A7-BCBB-089965DEB56F}
+	EndGlobalSection
+EndGlobal
