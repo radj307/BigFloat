@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GithubActions", "GithubActi
 		.github\workflows\UpdateVersion.yaml = .github\workflows\UpdateVersion.yaml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{C5A90628-6881-43F7-BC63-CE5962824865}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{973C8C6F-9C3E-4B45-8F20-CE1722D132D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{973C8C6F-9C3E-4B45-8F20-CE1722D132D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{973C8C6F-9C3E-4B45-8F20-CE1722D132D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5A90628-6881-43F7-BC63-CE5962824865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A90628-6881-43F7-BC63-CE5962824865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A90628-6881-43F7-BC63-CE5962824865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A90628-6881-43F7-BC63-CE5962824865}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
