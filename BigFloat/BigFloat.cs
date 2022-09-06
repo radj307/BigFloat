@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace BigFloat
+namespace radj307
 {
     [Serializable]
     public class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
