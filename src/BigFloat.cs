@@ -1,35 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Numerics;
 
 [Serializable]
-class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
+public class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
 {
     private BigInteger numerator;
     private BigInteger denominator;
 
-    public static readonly BigFloat One = new BigFloat(1);
-    public static readonly BigFloat Zero = new BigFloat(0);
-    public static readonly BigFloat MinusOne = new BigFloat(-1);
-    public static readonly BigFloat OneHalf = new BigFloat(1,2);
+    public static readonly BigFloat One = new(1);
+    public static readonly BigFloat Zero = new(0);
+    public static readonly BigFloat MinusOne = new(-1);
+    public static readonly BigFloat OneHalf = new(1, 2);
 
-    public int Sign
+    public int Sign => (numerator.Sign + denominator.Sign) switch
     {
-        get
-        {
-            switch(numerator.Sign + denominator.Sign) {
-                case 2: case -2:
-                    return 1;
-                case 0:
-                    return -1;
-                default:
-                    return 0;
-            }
-        }
-    }
+        2 or -2 => 1,
+        0 => -1,
+        _ => 0,
+    };
 
 
     //constructors
@@ -90,21 +79,15 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
         numerator = new BigInteger(value);
         denominator = BigInteger.One;
     }
-    public BigFloat(float value) : this(value.ToString("N99"))
-    {
-    }
-    public BigFloat(double value) : this(value.ToString("N99")) 
-    { 
-    }
-    public BigFloat(decimal value) : this(value.ToString("N99"))
-    {
-    }
+    public BigFloat(float value) : this(value.ToString("N99")) { }
+    public BigFloat(double value) : this(value.ToString("N99")) { }
+    public BigFloat(decimal value) : this(value.ToString("N99")) { }
 
     //non-static methods
     public BigFloat Add(BigFloat other)
     {
         if (BigFloat.Equals(other, null))
-            throw new ArgumentNullException("other");
+            throw new ArgumentNullException(nameof(other));
 
         this.numerator = this.numerator * other.denominator + other.numerator * this.denominator;
         this.denominator *= other.denominator;
@@ -113,7 +96,7 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     public BigFloat Subtract(BigFloat other)
     {
         if (BigFloat.Equals(other, null))
-            throw new ArgumentNullException("other");
+            throw new ArgumentNullException(nameof(other));
 
         this.numerator = this.numerator * other.denominator - other.numerator * this.denominator;
         this.denominator *= other.denominator;
@@ -122,7 +105,7 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     public BigFloat Multiply(BigFloat other)
     {
         if (BigFloat.Equals(other, null))
-            throw new ArgumentNullException("other");
+            throw new ArgumentNullException(nameof(other));
 
         this.numerator *= other.numerator;
         this.denominator *= other.denominator;
@@ -130,9 +113,9 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     }
     public BigFloat Divide(BigFloat other)
     {
-        if (BigInteger.Equals(other,null)) 
-            throw new ArgumentNullException("other");
-        if (other.numerator == 0) 
+        if (BigInteger.Equals(other, null))
+            throw new ArgumentNullException(nameof(other));
+        if (other.numerator == 0)
             throw new System.DivideByZeroException("other");
 
         this.numerator *= other.denominator;
@@ -142,7 +125,7 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     public BigFloat Remainder(BigFloat other)
     {
         if (BigInteger.Equals(other, null))
-            throw new ArgumentNullException("other");
+            throw new ArgumentNullException(nameof(other));
 
         //b = a mod n
         //remainder = a - floor(a/n) * n
@@ -195,9 +178,7 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     }
     public BigFloat Inverse()
     {
-        BigInteger temp = numerator;
-        numerator = denominator;
-        denominator = temp;
+        (denominator, numerator) = (numerator, denominator);
         return this;
     }
     public BigFloat Increment()
@@ -230,7 +211,7 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
         Factor();
         return this;
     }
-    public BigFloat Round() 
+    public BigFloat Round()
     {
         //get remainder. Over divisor see if it is > new BigFloat(0.5)
         BigFloat value = BigFloat.Decimals(this);
@@ -256,10 +237,10 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     }
     public BigFloat ShiftDecimalLeft(int shift)
     {
-        if (shift < 0) 
+        if (shift < 0)
             return ShiftDecimalRight(-shift);
 
-        numerator *= BigInteger.Pow(10,shift);
+        numerator *= BigInteger.Pow(10, shift);
         return this;
     }
     public BigFloat ShiftDecimalRight(int shift)
@@ -281,69 +262,61 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     {
         return BigInteger.Log(numerator, baseValue) - BigInteger.Log(numerator, baseValue);
     }
+    /// <inheritdoc/>
     public override string ToString()
     {
         //default precision = 100
         return ToString(100);
     }
-    public string ToString(int precision, bool trailingZeros = false) 
+    public string ToString(int precision, bool trailingZeros = false)
     {
         Factor();
 
-        BigInteger remainder;
-        BigInteger result = BigInteger.DivRem(numerator, denominator, out remainder);
+        BigInteger result = BigInteger.DivRem(numerator, denominator, out BigInteger remainder);
 
         if (remainder == 0 && trailingZeros)
             return result + ".0";
-        else if(remainder == 0)
+        else if (remainder == 0)
             return result.ToString();
 
 
         BigInteger decimals = (numerator * BigInteger.Pow(10, precision)) / denominator;
+        string decString = decimals.ToString();
+        decString = decString[result.ToString().Length..];
 
         if (decimals == 0 && trailingZeros)
             return result + ".0";
-        else if(decimals == 0)
+        else if (decimals == 0)
             return result.ToString();
 
-        StringBuilder sb = new StringBuilder();
-
-        while (precision-- > 0 && decimals > 0)
-        {
-            sb.Append(decimals%10);
-            decimals /= 10;
-        }
-
         if (trailingZeros)
-             return result + "." + new string(sb.ToString().Reverse().ToArray());
+            return result + "." + new string(decString.ToArray());
         else
-            return result + "." + new string(sb.ToString().Reverse().ToArray()).TrimEnd(new char[] { '0' });
-
-           
+            return result + "." + new string(decString.ToArray()).TrimEnd(new char[] { '0' });
     }
     public string ToMixString()
     {
         Factor();
 
-        BigInteger remainder;
-        BigInteger result = BigInteger.DivRem(numerator, denominator, out remainder);
+        BigInteger result = BigInteger.DivRem(numerator, denominator, out BigInteger remainder);
 
         if (remainder == 0)
             return result.ToString();
         else
             return result + ", " + remainder + "/" + denominator;
     }
-    
+
     public string ToRationalString()
     {
         Factor();
 
         return numerator + " / " + denominator;
     }
-    public int CompareTo(BigFloat other)
+    /// <inheritdoc/>
+    public int CompareTo(BigFloat? other)
     {
-        if (BigFloat.Equals(other, null))
-            throw new ArgumentNullException("other");
+        if (other is null || BigFloat.Equals(other, null))
+            throw new ArgumentNullException(nameof(other));
 
         //Make copies
         BigInteger one = this.numerator;
@@ -356,17 +329,19 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
         //test
         return BigInteger.Compare(one, two);
     }
-    public int CompareTo(object other)
+    /// <inheritdoc/>
+    public int CompareTo(object? other)
     {
         if (other == null)
-            throw new ArgumentNullException("other");
+            throw new ArgumentNullException(nameof(other));
 
-        if (!(other is BigFloat)) 
+        if (other is not BigFloat)
             throw new System.ArgumentException("other is not a BigFloat");
 
         return CompareTo((BigFloat)other);
     }
-    public override bool Equals(object other)
+    /// <inheritdoc/>
+    public override bool Equals(object? other)
     {
         if (other == null || GetType() != other.GetType())
         {
@@ -375,18 +350,20 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
 
         return this.numerator == ((BigFloat)other).numerator && this.denominator == ((BigFloat)other).denominator;
     }
-    public bool Equals(BigFloat other)
+    /// <inheritdoc/>
+    public bool Equals(BigFloat? other)
     {
-        return (other.numerator == this.numerator && other.denominator == this.denominator);
+        return other is not null && (other.numerator == this.numerator && other.denominator == this.denominator);
     }
 
+    /// <inheritdoc/>
     public override int GetHashCode()
     {
         return base.GetHashCode();
     }
 
     //static methods
-    public static bool Equals(object left, object right)
+    public new static bool Equals(object left, object? right)
     {
         if (left == null && right == null) return true;
         else if (left == null || right == null) return false;
@@ -467,30 +444,48 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     {
         return (new BigFloat(value)).Round();
     }
-    public static BigFloat Parse(string value) 
+    public static BigFloat Parse(string value)
     {
         if (value == null)
-            throw new ArgumentNullException("value");
+            throw new ArgumentNullException(nameof(value));
 
-        value.Trim();
-        value = value.Replace(",", "");
+        string v = value.Trim().Replace(",", "");
+
+        if (v.Length == 0)
+            throw new ArgumentOutOfRangeException(nameof(value), value, $"{nameof(value)} cannot be empty!");
+
         int pos = value.IndexOf('.');
-        value = value.Replace(".", "");
 
-        if (pos < 0)
+        if (pos == -1)
         {
-            //no decimal point
-            BigInteger numerator = BigInteger.Parse(value);
-            return (new BigFloat(numerator)).Factor();
+            return new(BigInteger.Parse(value));
         }
-        else
-        {
-            //decimal point (length - pos - 1)
-            BigInteger numerator = BigInteger.Parse(value);
-            BigInteger denominator = BigInteger.Pow(10, value.Length - pos);
+        //else:
 
-            return (new BigFloat(numerator, denominator)).Factor();
-        }
+        var numerator = BigInteger.Parse(value.Replace(".", string.Empty));
+        var denominator = BigInteger.Pow(10, value.Length - pos - 1);
+
+        return (new BigFloat(numerator, denominator)).Factor();
+
+        //if (value.Length == 0)
+        //    return new();
+
+
+
+        //if (pos < 0)
+        //{
+        //    //no decimal point
+        //    BigInteger numerator = BigInteger.Parse(value);
+        //    return (new BigFloat(numerator)).Factor();
+        //}
+        //else
+        //{
+        //    //decimal point (length - pos - 1)
+        //    BigInteger numerator = BigInteger.Parse(value);
+        //    BigInteger denominator = BigInteger.Pow(10, value.Length - pos - 1);
+
+        //    return (new BigFloat(numerator, denominator)).Factor();
+        //}
     }
     public static BigFloat ShiftDecimalLeft(BigFloat value, int shift)
     {
@@ -500,7 +495,7 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     {
         return (new BigFloat(value)).ShiftDecimalRight(shift);
     }
-    public static bool TryParse(string value, out BigFloat result) 
+    public static bool TryParse(string value, out BigFloat? result)
     {
         try
         {
@@ -521,9 +516,9 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     public static int Compare(BigFloat left, BigFloat right)
     {
         if (BigFloat.Equals(left, null))
-            throw new ArgumentNullException("left");
+            throw new ArgumentNullException(nameof(left));
         if (BigFloat.Equals(right, null))
-            throw new ArgumentNullException("right");
+            throw new ArgumentNullException(nameof(right));
 
         return (new BigFloat(left)).CompareTo(right);
     }
@@ -593,12 +588,14 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
         return (new BigFloat(value)).Inverse();
     }
 
-    public static bool operator !=(BigFloat left, BigFloat right)
+    public static bool operator !=(BigFloat left, BigFloat? right)
     {
+        if (right is null) return true;
         return Compare(left, right) != 0;
     }
-    public static bool operator ==(BigFloat left, BigFloat right)
+    public static bool operator ==(BigFloat left, BigFloat? right)
     {
+        if (right is null) return false;
         return Compare(left, right) == 0;
     }
     public static bool operator <(BigFloat left, BigFloat right)
@@ -627,8 +624,8 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
         return value == 0;
     }
 
-    public static explicit operator decimal(BigFloat value) 
-    { 
+    public static explicit operator decimal(BigFloat value)
+    {
         if (decimal.MinValue > value) throw new System.OverflowException("value is less than System.decimal.MinValue.");
         if (decimal.MaxValue < value) throw new System.OverflowException("value is greater than System.decimal.MaxValue.");
 
@@ -707,7 +704,7 @@ class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     {
         //factoring can be very slow. So use only when neccessary (ToString, and comparisons)
 
-        if (denominator == 1) 
+        if (denominator == 1)
             return this;
 
         //factor numerator and denominator
