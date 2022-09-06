@@ -1,45 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<PackageId>radj307.BigFloat</PackageId>
-		<AssemblyName>radj307.$(MSBuildProjectName)</AssemblyName>
-		<Authors>Osinko,pdemian,schaumb,c272,radj307</Authors>
-		<Description>An updated &amp; fixed fork of a fork of Osinko's arbitrary precision floating-point library, BigFloat.</Description>
-		<Copyright>MIT @ Osinko</Copyright>
-		<PackageProjectUrl>https://github.com/radj307/BigFloat</PackageProjectUrl>
-		<PackageIcon>BigFloat.png</PackageIcon>
-		<RepositoryUrl>https://github.com/radj307/BigFloat</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageTags>big;float;arbitrary-precision;arbitrary;precision;floating-point;bigfloat</PackageTags>
-		<PackageReleaseNotes>https://github.com/radj307/BigFloat/</PackageReleaseNotes>
-		<NeutralLanguage>en-CA</NeutralLanguage>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<ApplicationIcon>Resources\icons\BigFloat.ico</ApplicationIcon>
-		<Version></Version>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<None Remove="Resources\icons\BigFloat.ico" />
-		<None Remove="Resources\icons\BigFloat.png" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="Resources\icons\BigFloat.ico" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Resource Include="Resources\icons\BigFloat.ico">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</Resource>
-		<Resource Include="Resources\icons\BigFloat.png">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</Resource>
-	</ItemGroup>
-
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>radj307.BigFloat</PackageId>
+    <AssemblyName>radj307.$(MSBuildProjectName)</AssemblyName>
+    <Authors>Osinko,pdemian,schaumb,c272,radj307</Authors>
+    <Description>An updated &amp; fixed fork of a fork of Osinko's arbitrary precision floating-point library, BigFloat.</Description>
+    <Copyright>MIT @ Osinko</Copyright>
+    <PackageProjectUrl>https://github.com/radj307/BigFloat</PackageProjectUrl>
+    <PackageIcon>BigFloat.png</PackageIcon>
+    <RepositoryUrl>https://github.com/radj307/BigFloat</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>big;float;arbitrary-precision;arbitrary;precision;floating-point;bigfloat</PackageTags>
+    <PackageReleaseNotes>https://github.com/radj307/BigFloat/</PackageReleaseNotes>
+    <NeutralLanguage>en-CA</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <ApplicationIcon>Resources\icons\BigFloat.ico</ApplicationIcon>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Resources\icons\BigFloat.ico" />
+    <None Remove="Resources\icons\BigFloat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\icons\BigFloat.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icons\BigFloat.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Resource>
+    <Resource Include="Resources\icons\BigFloat.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Resource>
+  </ItemGroup>
 </Project>
