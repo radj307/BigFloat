@@ -20,6 +20,7 @@
     <ApplicationIcon>Resources\icons\BigFloat.ico</ApplicationIcon>
     <Version>1.0.0</Version>
     <RootNamespace>radj307</RootNamespace>
+    <Version>1.0.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\icons\BigFloat.ico" />
