@@ -18,22 +18,12 @@ public class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     public static readonly BigFloat MinusOne = new(-1);
     public static readonly BigFloat OneHalf = new(1, 2);
 
-    public int Sign
+    public int Sign => (numerator.Sign + denominator.Sign) switch
     {
-        get
-        {
-            switch (numerator.Sign + denominator.Sign)
-            {
-            case 2:
-            case -2:
-                return 1;
-            case 0:
-                return -1;
-            default:
-                return 0;
-            }
-        }
-    }
+        2 or -2 => 1,
+        0 => -1,
+        _ => 0,
+    };
 
 
     //constructors
