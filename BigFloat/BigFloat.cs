@@ -97,7 +97,7 @@ public class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     //non-static methods
     public BigFloat Add(BigFloat other)
     {
-        if (BigFloat.Equals(other, null))
+        if (other is null)
             throw new ArgumentNullException(nameof(other));
 
         this.numerator = this.numerator * other.denominator + other.numerator * this.denominator;
@@ -106,7 +106,7 @@ public class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     }
     public BigFloat Subtract(BigFloat other)
     {
-        if (BigFloat.Equals(other, null))
+        if (other is null)
             throw new ArgumentNullException(nameof(other));
 
         this.numerator = this.numerator * other.denominator - other.numerator * this.denominator;
@@ -115,7 +115,7 @@ public class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     }
     public BigFloat Multiply(BigFloat other)
     {
-        if (BigFloat.Equals(other, null))
+        if (other is null)
             throw new ArgumentNullException(nameof(other));
 
         this.numerator *= other.numerator;
@@ -124,7 +124,7 @@ public class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     }
     public BigFloat Divide(BigFloat other)
     {
-        if (BigInteger.Equals(other, null))
+        if (other is null)
             throw new ArgumentNullException(nameof(other));
         if (other.numerator == 0)
             throw new System.DivideByZeroException("other");
@@ -135,7 +135,7 @@ public class BigFloat : IComparable, IComparable<BigFloat>, IEquatable<BigFloat>
     }
     public BigFloat Remainder(BigFloat other)
     {
-        if (BigInteger.Equals(other, null))
+        if (other is null)
             throw new ArgumentNullException(nameof(other));
 
         //b = a mod n
